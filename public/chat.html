@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>채팅 클라이언트</title>
+
+    <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1">
+
+    <!-- bootstrap css 불러오기 -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6" crossorigin="anonymous">
+
+    <!-- chatdesign css 불러오기 -->
+    <link href="chatdesign.css" rel="stylesheet" type="text/css">
+
+    <link href="./semantic.min.css" rel="stylesheet">
+
+    <script src="jquery-3.1.1.min.js"></script>
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="semantic.min.js"></script>
+
+    <script src="chat.js"></script>
+</head>
+
+<body>
+    <div class="container">
+        <div id="cardbox" class="ui blue fluid card">
+            <div class="content">
+                <div class="left floated author">
+                    <img id="iconImage" class="ui avatar image" src="./images//chatimage.png">
+                </div>
+                <div>
+                    <div id="titleText" class="header">채팅</div>
+                    <div id="contentsText" class="description">
+                        로그인 후 메시지를 보내세요.
+                    </div>
+                </div>
+            </div>
+
+            <div>
+                <div class="ui input">
+                    <input type="text" id="idInput" style="display:'';" placeholder="Type your nickname" />
+                    &nbsp;&nbsp;&nbsp;&nbsp;
+                    <input class="ui primary button" type="button" id="connectButton" style="display:'';" value="로그인" />
+                    <input class="ui primary button" type="button" id="logoutButton" style="display:none;" value="로그아웃" />
+                </div>
+            </div>
+
+            <br><br>
+
+            <div>
+                <!-- command 선택 일반채팅 or 그룹채팅 -->
+                <select name="chattype" id="chattype">
+                    <option value="chat">귓속말</option>
+                    <option value="groupchat" selected>전체 채팅</option>
+                </select>
+            </div>
+
+            <br>
+
+            <div>
+                <div class="ui input" id="whorecepient" style="display:none;">
+                    <span>받는사람 아이디 :</span> <input type="text" id="recepientInput" value="ALL" />
+                </div>
+            </div>
+            <br>
+        </div>
+    </div>
+
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
+    <div class="container">
+
+        <!-- Page header start -->
+        <div class="page-title">
+            <div class="row gutters">
+                <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
+                    <h5 class="title">Active Users</h5>
+                </div>
+            </div>
+        </div>
+        <!-- Page header end -->
+
+        <!-- Content wrapper start -->
+        <div class="content-wrapper">
+
+            <!-- Row start -->
+            <div class="row gutters">
+
+                <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+
+                    <div class="card m-0">
+
+                        <!-- Row start -->
+                        <div class="row no-gutters">
+                            <div class="col-xl-4 col-lg-4 col-md-4 col-sm-3 col-3">
+                                <div class="users-container">
+                                    <ul class="users" style="height: 500px; overflow-y: scroll;">
+                                        <!-- 유저프로필 들어오는 공간 -->
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="col-xl-8 col-lg-8 col-md-8 col-sm-9 col-9">
+                                <div class="selected-user">
+                                    <span>To: <span class="name">ALL</span></span>
+                                </div>
+                                <div class="chat-container">
+                                    <ul class="chat-box chatContainerScroll" style="height: 300px; overflow-y: scroll;">
+                                        <!-- 메시지 들어오는 공간 -->
+                                    </ul>
+                                    <div class="form-group mt-3 mb-0">
+                                        <textarea class="form-control" rows="3" id="dataInput"
+                                            placeholder="Type your message here..."></textarea>
+                                    </div>
+                                    <br>
+                                    <input class="ui primary button" type="button" id="sendButton" value="전송" />
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Row end -->
+                    </div>
+
+                </div>
+
+            </div>
+            <!-- Row end -->
+
+        </div>
+        <!-- Content wrapper end -->
+
+    </div>
+
+</body>
+
+</html>
