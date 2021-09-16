@@ -51,6 +51,50 @@ $(function () {
                 addUserlist(checkId[i]);
             }
         })
+
+        // 음성 => 텍스트 채팅
+        if (!("webkitSpeechRecognition" in window)) {
+            alert("음성채팅 기능은 크롬만 지원함!");
+        } else {
+            const speech = new webkitSpeechRecognition;
+
+            document.getElementById("start").addEventListener("click", () => {
+                speech.start();
+            })
+
+            document.getElementById("stop").addEventListener("click", () => {
+                speech.stop();
+            })
+
+            // 단축키 지정
+            document.onkeyup = (e) => {
+                if(e.which == 89) speech.start(); // 단축키 : Y
+                if(e.which == 85) speech.stop(); // 단축키 : U
+            }
+
+            speech.addEventListener("result", (event) => {
+                const { transcript } = event["results"][0][0];
+                
+                // chattype 구별
+                var chattype = $('#chattype option:selected').val();
+
+                var sender = $('#idInput').val();
+                var recepient = $('#recepientInput').val();
+                var data = transcript;
+
+                var output = { sender: sender, recepient: recepient, command: chattype, type: 'text', data: data };
+                console.log('서버로 보낼 데이터 : ' + JSON.stringify(output));
+
+                if (socket == undefined) {
+                    alert('서버가 연결되어 있지 않음!');
+                    return;
+                }
+
+                socket.emit('message', output);
+
+                addToDiscussion('self', sender, recepient, chattype, data);
+            })
+        }
     });
 
     // 로그아웃 - 채팅서버 연결 끊기
